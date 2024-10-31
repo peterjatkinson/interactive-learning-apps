@@ -9,7 +9,7 @@ const ToggleSwitchApp = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen p-8">
-      <h2 className="text-2xl font-bold mb-4">Toggle Switch</h2>
+      <h2 className="text-2xl font-bold mb-4">Toggle Switch!</h2>
       <p className="text-lg mb-6">
         The switch is currently: <strong>{isOn ? 'ON' : 'OFF'}</strong>
       </p>
