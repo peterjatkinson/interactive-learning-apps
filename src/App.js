@@ -6,6 +6,7 @@ import AdvertisingTimeline from './apps/AdvertisingTimeline.js';
 import CounterApp from './apps/CounterApp.js';
 import PositioningStatementCreator from './apps/PositioningStatementCreator.js';
 import PositioningStatementGlobal from './apps/PositioningStatementGlobal.js';
+import ToggleSwitchApp from './apps/ToggleSwitchApp.js';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
                 <li style={{ marginBottom: '1rem' }}><Link to="/counterapp" style={{ fontSize: '1.2rem', textDecoration: 'underline' }}> Counter App</Link></li>
                 <li style={{ marginBottom: '1rem' }}><Link to="/positioningstatementcreator" style={{ fontSize: '1.2rem', textDecoration: 'underline' }}> Positioning Statement Creator</Link></li>
                 <li style={{ marginBottom: '1rem' }}><Link to="/positioningstatementglobal" style={{ fontSize: '1.2rem', textDecoration: 'underline' }}> Positioning Statement Global</Link></li>
+                <li style={{ marginBottom: '1rem' }}><Link to="/toggleswitchapp" style={{ fontSize: '1.2rem', textDecoration: 'underline' }}> Toggle Switch App</Link></li>
                 </ul>
               </nav>
             </div>
@@ -32,6 +34,7 @@ function App() {
         <Route path="/counterapp" element={<CounterApp />} />
         <Route path="/positioningstatementcreator" element={<PositioningStatementCreator />} />
         <Route path="/positioningstatementglobal" element={<PositioningStatementGlobal />} />
+        <Route path="/toggleswitchapp" element={<ToggleSwitchApp />} />
       </Routes>
     </Router>
   );
