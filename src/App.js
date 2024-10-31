@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import PositioningStatementCreator from './apps/PositioningStatementCreator';
 import AdvertisingTimeline from './apps/AdvertisingTimeline';
-import CounterApp from './apps/CounterApp'; // Import the new app
+import CounterApp from './apps/CounterApp';
+import PositioningStatementGlobal from './apps/PositioningStatementGlobal'; // New import
 
 function App() {
   return (
@@ -26,9 +27,14 @@ function App() {
                       Advertising Timeline
                     </Link>
                   </li>
-                  <li>
+                  <li style={{ marginBottom: '1rem' }}>
                     <Link to="/counter" style={{ fontSize: '1.2rem', textDecoration: 'underline' }}>
                       Simple Counter
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/positioning-statement-global" style={{ fontSize: '1.2rem', textDecoration: 'underline' }}>
+                      Positioning Statement Creator (Global CSS)
                     </Link>
                   </li>
                 </ul>
@@ -38,7 +44,8 @@ function App() {
         />
         <Route path="/positioning-statement" element={<PositioningStatementCreator />} />
         <Route path="/advertising-timeline" element={<AdvertisingTimeline />} />
-        <Route path="/counter" element={<CounterApp />} /> {/* New Route */}
+        <Route path="/counter" element={<CounterApp />} />
+        <Route path="/positioning-statement-global" element={<PositioningStatementGlobal />} /> {/* New Route */}
       </Routes>
     </Router>
   );
