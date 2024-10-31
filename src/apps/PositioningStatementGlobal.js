@@ -10,11 +10,13 @@ const PositioningStatementGlobal = () => {
     usp: ''
   });
   const [copied, setCopied] = useState(false);
+  const [ariaMessage, setAriaMessage] = useState(''); // Screen reader message
   const textareaRef = useRef(null);
+  const copyButtonRef = useRef(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
       [name]: value
     }));
@@ -29,8 +31,23 @@ const PositioningStatementGlobal = () => {
       textareaRef.current.select();
       document.execCommand('copy');
       setCopied(true);
+      setAriaMessage('Text copied to clipboard'); // Set message for screen readers
+      copyButtonRef.current.focus(); // Return focus to button after action
       setTimeout(() => setCopied(false), 2000); // Reset copied status after 2 seconds
     }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      targetAudience: '',
+      brand: '',
+      category: '',
+      keyBenefit: '',
+      competitor: '',
+      usp: ''
+    });
+    setCopied(false);
+    setAriaMessage('Form has been reset'); // Announce reset for screen readers
   };
 
   return (
@@ -42,7 +59,9 @@ const PositioningStatementGlobal = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         {Object.entries(formData).map(([key, value]) => (
           <div key={key} className="flex flex-col">
-            <label htmlFor={key} className="text-sm font-medium text-gray-600 mb-1 capitalize">{key.replace(/([A-Z])/g, ' $1')}</label>
+            <label htmlFor={key} className="text-sm font-medium text-gray-600 mb-1 capitalize">
+              {key.replace(/([A-Z])/g, ' $1')}
+            </label>
             <input
               type="text"
               id={key}
@@ -51,6 +70,7 @@ const PositioningStatementGlobal = () => {
               onChange={handleInputChange}
               placeholder={`Enter ${key}`}
               className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              aria-required="true"
             />
           </div>
         ))}
@@ -62,6 +82,7 @@ const PositioningStatementGlobal = () => {
           ref={textareaRef}
           value={generateStatement()}
           readOnly
+          aria-readonly="true"
           className="w-full p-4 border border-gray-300 rounded h-32 resize-none focus:outline-none"
           aria-label="Generated positioning statement"
         />
@@ -70,20 +91,28 @@ const PositioningStatementGlobal = () => {
       <div className="flex justify-center space-x-4">
         <button
           type="button"
+          ref={copyButtonRef}
           onClick={copyToClipboard}
           className={`px-6 py-2 font-semibold text-white rounded ${
             copied ? 'bg-green-500' : 'bg-blue-500 hover:bg-blue-600'
           } transition`}
+          aria-label="Copy to clipboard"
         >
           {copied ? 'Copied!' : 'Copy to Clipboard'}
         </button>
         <button
           type="button"
-          onClick={() => setFormData({ targetAudience: '', brand: '', category: '', keyBenefit: '', competitor: '', usp: '' })}
+          onClick={resetForm}
           className="px-6 py-2 font-semibold text-white bg-red-500 rounded hover:bg-red-600 transition"
+          aria-label="Reset the form"
         >
           Reset
         </button>
+      </div>
+
+      {/* Screen reader-only message area */}
+      <div aria-live="assertive" className="sr-only">
+        {ariaMessage}
       </div>
     </form>
   );
