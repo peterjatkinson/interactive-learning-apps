@@ -14,6 +14,8 @@ const PositioningStatementGlobal = () => {
   const [ariaMessage, setAriaMessage] = useState(''); // Screen reader message
   const textareaRef = useRef(null);
   const copyButtonRef = useRef(null);
+  const containerRef = useRef(null);
+
 
   useEffect(() => {
     // Start the auto-resize interval once when the component mounts
