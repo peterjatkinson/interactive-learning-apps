@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { initiateAutoResize } from '../resizeHelper';
 
 const PositioningStatementGlobal = () => {
   const [formData, setFormData] = useState({
@@ -14,29 +13,6 @@ const PositioningStatementGlobal = () => {
   const [ariaMessage, setAriaMessage] = useState(''); // Screen reader message
   const textareaRef = useRef(null);
   const copyButtonRef = useRef(null);
-  const containerRef = useRef(null);
-
-
-  useEffect(() => {
-    // Start the auto-resize interval once when the component mounts
-    initiateAutoResize();
-
-    // Set up ResizeObserver to detect container size changes and resize if needed
-    const resizeObserver = new ResizeObserver(() => {
-      initiateAutoResize(); // Ensure height is adjusted when container changes
-    });
-
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current); // Observe main container
-    }
-
-    // Cleanup observer on component unmount
-    return () => {
-      if (containerRef.current) {
-        resizeObserver.unobserve(containerRef.current);
-      }
-    };
-  }, []);
 
 
 
@@ -78,7 +54,7 @@ const PositioningStatementGlobal = () => {
   };
 
   return (
-    <form ref={containerRef} className="max-w-4xl w-full mx-auto p-8 bg-blue-100 rounded-lg shadow-lg" aria-labelledby="form-title">
+    <form className="max-w-4xl w-full mx-auto p-8 bg-blue-100 rounded-lg shadow-lg" aria-labelledby="form-title">
       <h1 id="form-title" className="text-2xl font-bold mb-6 text-gray-700 text-center">
         Positioning Statement Creator
       </h1>

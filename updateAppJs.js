@@ -8,14 +8,19 @@ const appJsPath = path.join(__dirname, 'src', 'App.js');
 // Read all .js files in the apps directory
 const files = fs.readdirSync(appsDir).filter(file => file.endsWith('.js'));
 
-// Generate imports, routes, and links dynamically
-const imports = files.map(file => `import ${path.basename(file, '.js')} from './apps/${file}';`).join('\n');
+// Generate imports for each app and the ResizeWrapper
+const imports = `import ResizeWrapper from './ResizeWrapper';\n` +
+                files.map(file => `import ${path.basename(file, '.js')} from './apps/${file}';`).join('\n');
+
+// Generate routes wrapped in ResizeWrapper
 const routes = files
   .map(file => {
     const routeName = path.basename(file, '.js').toLowerCase();
-    return `<Route path="/${routeName}" element={<${path.basename(file, '.js')} />} />`;
+    return `<Route path="/${routeName}" element={<ResizeWrapper><${path.basename(file, '.js')} /></ResizeWrapper>} />`;
   })
   .join('\n        ');
+
+// Generate links for each app
 const links = files
   .map(file => {
     const linkName = path.basename(file, '.js');
