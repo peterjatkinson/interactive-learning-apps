@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { requestResize } from '../resizeHelper';
 
 const PositioningStatementGlobal = () => {
