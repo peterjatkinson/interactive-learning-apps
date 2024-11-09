@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { requestResize } from '../resizeHelper';
+import { initiateAutoResize } from '../resizeHelper';
 
 const PositioningStatementGlobal = () => {
   const [formData, setFormData] = useState({
@@ -16,25 +16,26 @@ const PositioningStatementGlobal = () => {
   const copyButtonRef = useRef(null);
 
   useEffect(() => {
-    // Call requestResize on mount to set initial height
-    requestResize();
+    // Start the auto-resize interval once when the component mounts
+    initiateAutoResize();
 
-    // Set up ResizeObserver to observe the container's height changes
+    // Set up ResizeObserver to detect container size changes and resize if needed
     const resizeObserver = new ResizeObserver(() => {
-      requestResize(); // Call resize function whenever container height changes
+      initiateAutoResize(); // Ensure height is adjusted when container changes
     });
 
     if (containerRef.current) {
-      resizeObserver.observe(containerRef.current); // Observe the main container
+      resizeObserver.observe(containerRef.current); // Observe main container
     }
 
-    // Cleanup observer on unmount
+    // Cleanup observer on component unmount
     return () => {
       if (containerRef.current) {
         resizeObserver.unobserve(containerRef.current);
       }
     };
   }, []);
+
 
 
 
