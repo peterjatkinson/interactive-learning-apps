@@ -7,15 +7,16 @@ export function initiateAutoResize(interval = 500) {
   let prevHeight = 0;
 
   intervalId = setInterval(() => {
+    const adjustHeight = 2;
     const height = document.body.scrollHeight;
 
-    // Only send a resize message if the height difference is greater than 5 pixels
-    if (Math.abs(height - prevHeight) > 5) {
-      console.log("Sending resize message with height:", height);
+    if (height !== prevHeight) {
+      console.log("Sending resize message with height:", height + adjustHeight);
 
+      // Send the resize message to the parent page
       window.parent.postMessage(
         {
-          height: height, // Remove adjustHeight if it’s causing issues
+          height: height + adjustHeight,
           source: "insendi-activity-resize",
         },
         "*"
