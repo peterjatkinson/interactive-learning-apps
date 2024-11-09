@@ -80,7 +80,7 @@ const PositioningStatementGlobal = () => {
       </div>
 
       <div className="bg-white p-6 rounded shadow-inner mb-8">
-        <h2 className="text-lg font-bold mb-4 text-gray-700">Your positioning statement:</h2>
+        <h2 className="text-lg font-bold mb-4 text-gray-700">Your positioning statement</h2>
         <textarea
           ref={textareaRef}
           value={generateStatement()}
