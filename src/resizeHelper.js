@@ -17,15 +17,10 @@ export function initiateAutoResize(interval = 500) {
       window.parent.postMessage(
         {
           height: height + adjustHeight,
-          source: "interactive-library-resize",
+          source: "insendi-activity-resize",
         },
         "*"
       );
-
-      // Attempt to directly set the height of the iframe element
-      if (window.frameElement) {
-        window.frameElement.style.height = `${height + adjustHeight}px`;
-      }
 
       prevHeight = height;
     }
