@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import { requestResize } from '../resizeHelper';
 
 const PositioningStatementGlobal = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,19 @@ const PositioningStatementGlobal = () => {
   const [ariaMessage, setAriaMessage] = useState(''); // Screen reader message
   const textareaRef = useRef(null);
   const copyButtonRef = useRef(null);
+
+  useEffect(() => {
+    // Call requestResize on mount
+    requestResize();
+
+    // Call requestResize on window resize
+    window.addEventListener('resize', requestResize);
+
+    // Cleanup listener on component unmount
+    return () => window.removeEventListener('resize', requestResize);
+  }, []);
+
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
