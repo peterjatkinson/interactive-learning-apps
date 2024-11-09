@@ -1,4 +1,5 @@
 // src/resizeHelper.js
+
 export function startAutoResize(interval = 500) {
     let prevHeight = 0;
   

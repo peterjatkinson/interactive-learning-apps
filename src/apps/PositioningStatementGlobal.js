@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { startAutoResize } from '../resizeHelper';
+import { requestResize } from '../resizeHelper';
 
 const PositioningStatementGlobal = () => {
   const [formData, setFormData] = useState({
@@ -16,10 +16,24 @@ const PositioningStatementGlobal = () => {
   const copyButtonRef = useRef(null);
 
   useEffect(() => {
-    // Start the automatic resizing interval
-    startAutoResize();
+    // Call requestResize on mount to set initial height
+    requestResize();
 
-    // No need for cleanup since `startAutoResize` runs independently
+    // Set up ResizeObserver to observe the container's height changes
+    const resizeObserver = new ResizeObserver(() => {
+      requestResize(); // Call resize function whenever container height changes
+    });
+
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current); // Observe the main container
+    }
+
+    // Cleanup observer on unmount
+    return () => {
+      if (containerRef.current) {
+        resizeObserver.unobserve(containerRef.current);
+      }
+    };
   }, []);
 
 
@@ -62,7 +76,7 @@ const PositioningStatementGlobal = () => {
   };
 
   return (
-    <form className="max-w-4xl w-full mx-auto p-8 bg-blue-100 rounded-lg shadow-lg" aria-labelledby="form-title">
+    <form ref={containerRef} className="max-w-4xl w-full mx-auto p-8 bg-blue-100 rounded-lg shadow-lg" aria-labelledby="form-title">
       <h1 id="form-title" className="text-2xl font-bold mb-6 text-gray-700 text-center">
         Positioning Statement Creator
       </h1>
