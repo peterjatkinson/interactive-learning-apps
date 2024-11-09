@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { requestResize } from '../resizeHelper';
+import { startAutoResize } from '../resizeHelper';
 
 const PositioningStatementGlobal = () => {
   const [formData, setFormData] = useState({
@@ -16,15 +16,12 @@ const PositioningStatementGlobal = () => {
   const copyButtonRef = useRef(null);
 
   useEffect(() => {
-    // Call requestResize on mount
-    requestResize();
+    // Start the automatic resizing interval
+    startAutoResize();
 
-    // Call requestResize on window resize
-    window.addEventListener('resize', requestResize);
-
-    // Cleanup listener on component unmount
-    return () => window.removeEventListener('resize', requestResize);
+    // No need for cleanup since `startAutoResize` runs independently
   }, []);
+
 
 
 

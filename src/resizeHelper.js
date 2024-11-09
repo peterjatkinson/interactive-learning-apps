@@ -1,14 +1,22 @@
 // src/resizeHelper.js
-export function requestResize() {
-    const adjustHeight = 2; // Adjust for any padding/borders if needed
-    const height = document.body.scrollHeight; // Get the full content height
+export function startAutoResize(interval = 500) {
+    let prevHeight = 0;
   
-    window.parent.postMessage(
-      {
-        height: height + adjustHeight,
-        source: "interactive-library-resize", // Identifier for the parent listener
-      },
-      "*"
-    );
+    setInterval(() => {
+      const adjustHeight = 2;
+      const height = document.body.scrollHeight;
+  
+      if (height !== prevHeight) { // Only send if height has changed
+        console.log("Sending resize message with height:", height + adjustHeight); // Log the height being sent
+        window.parent.postMessage(
+          {
+            height: height + adjustHeight,
+            source: "interactive-library-resize",
+          },
+          "*"
+        );
+        prevHeight = height; // Update previous height
+      }
+    }, interval); // Interval is set here
   }
   
