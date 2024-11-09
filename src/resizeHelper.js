@@ -6,17 +6,16 @@ export function startAutoResize(interval = 500) {
       const adjustHeight = 2;
       const height = document.body.scrollHeight;
   
-      if (height !== prevHeight) { // Only send if height has changed
-        console.log("Sending resize message with height:", height + adjustHeight); // Log the height being sent
-        window.parent.postMessage(
-          {
-            height: height + adjustHeight,
-            source: "interactive-library-resize",
-          },
-          "*"
-        );
+      if (height !== prevHeight) {
+        console.log("Setting iframe height to:", height + adjustHeight);
+  
+        // Attempt to set the iframe height directly
+        if (window.frameElement) { // Checks if this code is running within an iframe
+          window.frameElement.style.height = `${height + adjustHeight}px`;
+        }
+  
         prevHeight = height; // Update previous height
       }
-    }, interval); // Interval is set here
+    }, interval); // Interval for checking height changes
   }
   
