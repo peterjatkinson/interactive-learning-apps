@@ -1,7 +1,7 @@
 // src/resizeHelper.js
 let intervalId;
 
-export function initiateAutoResize(interval = 500) {
+export function initiateAutoResize(interval = 250) {
   if (intervalId) return; // Prevent multiple intervals
 
   let prevHeight = 0;
